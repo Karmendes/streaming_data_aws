@@ -28,7 +28,7 @@ resource "aws_glue_catalog_table" "aws_glue_catalog_table" {
   storage_descriptor {
     columns{
     name = "temperature"
-    type = "integer"
+    type = "int"
   }
 
    columns{
@@ -49,7 +49,7 @@ resource "aws_glue_catalog_table" "aws_glue_catalog_table" {
   }
   columns{
     name = "id_device"
-    type = "integer"
+    type = "int"
   }  
 }
   
