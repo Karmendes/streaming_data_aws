@@ -133,8 +133,8 @@ resource "aws_kinesis_firehose_delivery_stream" "stream_aws" {
     role_arn   = aws_iam_role.firehose_role.arn
     bucket_arn = aws_s3_bucket.s3_lake.arn
 
-    buffer_size = 64
-    buffer_interval = 60
+    buffer_size = 128
+    buffer_interval = 300
       
     dynamic_partitioning_configuration {
         enabled = true
