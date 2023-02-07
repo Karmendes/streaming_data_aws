@@ -14,7 +14,8 @@ class Generator:
                     'cpu':random.random(),
                     'ram':random.random(),
                     'hd':random.random(),
-                    'timestamp': str(datetime.now()),
+                    'timestamp': str(datetime.now() - datetime.timedelta(minutes = random.randint(0,60))),
+                    'timestamp_sent': str(datetime.now()),
                     'id_device':random.randint(0,10)
                 }
     
@@ -40,7 +41,7 @@ if __name__ == "__main__":
     while True:
         iot_data.send_record_to_kinesis('stream_fake_iot')
         iot_data.printer_in_screem()
-        sleep(2)
+        sleep(1)
 
 
 
