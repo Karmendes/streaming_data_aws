@@ -179,7 +179,7 @@ resource "aws_kinesis_firehose_delivery_stream" "stream_aws" {
     }
 
       # Example prefix using partitionKeyFromQuery, applicable to JQ processor
-        prefix              = "data/!{partitionKeyFromQuery:id_device}/"
+        prefix              = "data/!{partitionKeyFromQuery:timestamp_sent}/"
         error_output_prefix = "errors/"
     }
     
