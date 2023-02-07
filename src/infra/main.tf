@@ -48,6 +48,10 @@ resource "aws_glue_catalog_table" "aws_glue_catalog_table" {
     type = "string"
   }
   columns{
+    name = "timestamp_sent"
+    type = "string"
+  }
+  columns{
     name = "id_device"
     type = "int"
   }  
