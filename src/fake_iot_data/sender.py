@@ -1,5 +1,5 @@
 import random
-from datetime import datetime
+from datetime import datetime,timedelta
 from time import sleep
 import boto3
 import json
@@ -14,7 +14,7 @@ class Generator:
                     'cpu':random.random(),
                     'ram':random.random(),
                     'hd':random.random(),
-                    'timestamp': str(datetime.now() - datetime.timedelta(minutes = random.randint(0,60))),
+                    'timestamp': str(datetime.now() - timedelta(minutes = random.randint(0,60))),
                     'timestamp_sent': str(datetime.now().strftime("%Y-%m-%d %H")),
                     'id_device':random.randint(0,10)
                 }
