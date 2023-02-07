@@ -15,7 +15,7 @@ class Generator:
                     'ram':random.random(),
                     'hd':random.random(),
                     'timestamp': str(datetime.now() - datetime.timedelta(minutes = random.randint(0,60))),
-                    'timestamp_sent': str(datetime.now()),
+                    'timestamp_sent': str(datetime.now().strftime("%Y-%m-%d %H")),
                     'id_device':random.randint(0,10)
                 }
     
