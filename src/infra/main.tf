@@ -172,7 +172,7 @@ resource "aws_kinesis_firehose_delivery_stream" "stream_aws" {
         }
           parameters {
           parameter_name  = "MetadataExtractionQuery"
-          parameter_value = "{id_device:.id_device}"
+          parameter_value = "{timestamp_sent:.timestamp_sent}"
 
         }
     }
