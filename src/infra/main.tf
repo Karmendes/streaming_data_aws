@@ -83,8 +83,8 @@ EOF
 }
 
 // Criando policy para a role do kinesis
-resource "aws_iam_role_policy" "firehose-stream-policy" {
-    name = "fire-stream-policy-watchmen"
+resource "aws_iam_role_policy" "stream-policy-kinesis" {
+    name = "s3-kinesis-glue-policy"
     role = "${aws_iam_role.firehose_role.id}"
 
     policy = <<EOF
@@ -110,13 +110,78 @@ resource "aws_iam_role_policy" "firehose-stream-policy" {
             "Action":[
                 "glue:*"
             ],
-            "Resource":"*" 
+            "Resource":"*"
         }
     ]
 }
 EOF
 }
 
+// Criando role para o Glue
+resource "aws_iam_role" "glue_role" {
+  name = "glue_access"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Action = "sts:AssumeRole",
+        Principal = {
+          Service = "glue.amazonaws.com"
+        },
+        Effect = "Allow",
+        Sid = ""
+      }
+    ]
+  })
+}
+
+// Criando policy para role do Glue
+resource "aws_iam_role_policy" "stream-policy-glue" {
+    name = "awsLogs-policy"
+    role = "${aws_iam_role.glue_role.id}"
+
+    policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement":[
+        {
+            "Effect":"Allow",
+            "Action":[
+                "logs:*"
+            ],
+            "Resource":"*"
+        },
+        {
+            "Effect":"Allow",
+            "Action":[
+                "s3:*"
+            ],
+            "Resource":"*"
+        },
+        {
+            "Effect":"Allow",
+            "Action":[
+                "glue:*"
+            ],
+            "Resource":"*"
+        }
+    ]
+}
+EOF
+}
+
+
+
+resource "aws_glue_crawler" "crawler_iot_data" {
+  database_name = aws_glue_catalog_database.aws_glue_catalog_database.name
+  name          = "crawler_iot_data"
+  role          = aws_iam_role.glue_role.arn
+
+  s3_target {
+    path = "s3://${aws_s3_bucket.s3_lake.bucket}"
+  }
+}
 
 // Criando stream de entrega
 resource "aws_kinesis_firehose_delivery_stream" "stream_aws" {
