@@ -81,8 +81,6 @@ python streaming_data_aws/src/fake_iot_dat/sender.py
 
 8. Go to the athena service, select the database and the table that refer to the data and that's it. You will already be able to write queries directly in S3.
 
-# O que poderia ser feito além?
-
 
 # What could be done further?
 
